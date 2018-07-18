@@ -1,0 +1,12 @@
+*.sqlite3
+.idea
+*pyc
+*.py[co]
+.DS_Store
+.idea
+*.swp*
+*~
+*.tmproj
+*.log
+.env
+tmp
