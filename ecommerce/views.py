@@ -6,7 +6,7 @@ from .forms import LoginForm, RegisterForm
 def home_page(request):
     context ={
         "title": "Hello World!",
-        "content": "Welcome to the homepage",
+        "welcome": "Welcome to the homepage",
         "premium_content": "YEAHHH"
     }
     return render(request, "home_page.html", context)
