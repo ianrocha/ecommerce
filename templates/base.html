@@ -11,6 +11,7 @@
       <link rel='stylesheet' href='{% static "css/main.css" %}' >
     </head>
     <body>
+        {% include 'navbar.html' with brand_name='eCommerce' %}
         {% block content %}
         {% endblock %}
         <!-- Optional JavaScript -->
