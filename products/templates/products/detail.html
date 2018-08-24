@@ -9,7 +9,7 @@
                 {% endif %}
                 <br/> <h1>{{ object.title|title }}:</h1>
                 <br/> {{ object.timestamp|timesince }} ago
-                <br/> {{ object.description|linebreaks }}
+                <br/> <p class="text-dark">{{ object.description|linebreaks }}</p>
             </div>
         </div>
     </div>
