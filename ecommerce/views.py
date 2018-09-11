@@ -9,6 +9,7 @@ def home_page(request):
         "welcome": "Welcome to the homepage",
         "premium_content": "YEAHHH"
     }
+    # print(request.session.get('first_name', 'Unknown'))
     return render(request, "home_page.html", context)
 
 
