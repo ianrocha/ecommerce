@@ -76,6 +76,10 @@ class Product(models.Model):
         # return "/products/{slug}/".format(slug=self.slug)
         return reverse("products:detail", kwargs={"slug": self.slug})
 
+    @property
+    def name(self):
+        return self.title
+
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
