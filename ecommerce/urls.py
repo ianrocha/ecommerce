@@ -21,7 +21,6 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 
-from carts.views import cart_home
 from . import views
 
 
@@ -31,19 +30,11 @@ urlpatterns = [
     # path('about/', views.about_page, name='about'),
     # path('contact/', views.contact_page, name='contact'),
     path('login/', views.login_page, name='login'),
-    path('cart/', cart_home, name='cart'),
+    path('cart/', include(('carts.urls', 'cart'), namespace='cart')),
     path('register/', views.register_page, name='register'),
     path('products/', include(('products.urls', 'products'), namespace='products')),
     path('search/', include(('search.urls', 'search'), namespace='search')),
     path('bootstrap/', TemplateView.as_view(template_name='bootstrap/example.html')),
-    # path('contact/', views.)
-    # path('featured/', ProductFeaturedListView.as_view()),
-    # path('featured/<pk>/', ProductFeaturedDetailView.as_view()),
-    # path('products/', ProductListView.as_view()),
-    # path('products-fbv/', product_list_view),
-    # # path('products/<pk>/', ProductDetailView.as_view()),
-    # path('products/<slug>/', ProductDetailSlugView.as_view()),
-    # path('products-fbv/<pk>/', product_detail_view),
 
 ]
 
