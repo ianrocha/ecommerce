@@ -23,5 +23,6 @@ def cart_update(request):
             cart_obj.products.remove(product_obj)
         else:
             cart_obj.products.add(product_obj) # cart_obj.products.add(product_id) - add to m2m
+        request.session['cart_items'] = cart_obj.products.count()
         # cart_obj.products.remove(obj) - remove from m2m
     return redirect('cart:home')
