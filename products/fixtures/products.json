@@ -1,0 +1,72 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "title": "Straw Hat",
+        "slug": "straw-hat",
+        "description": "This is a Straw Hat!",
+        "price": "39.99",
+        "image": "products/6222404328/6222404328.png",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-08-24T14:31:23.779Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "title": "Shirt",
+        "slug": "shirt",
+        "description": "A cool shirt for your father!",
+        "price": "39.99",
+        "image": "products/20517087374/20517087374.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-08-24T14:31:23.779Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "title": "Computer",
+        "slug": "computer",
+        "description": "Expensive computer",
+        "price": "39.99",
+        "image": "products/13559366056/13559366056.jpg",
+        "featured": true,
+        "active": true,
+        "timestamp": "2018-08-24T14:31:23.779Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 4,
+    "fields": {
+        "title": "smartphone",
+        "slug": "smartphone",
+        "description": "super smartphone",
+        "price": "39.99",
+        "image": "products/17982853114/17982853114.jpg",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-08-24T14:31:23.779Z"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+        "title": "Lorem Ipsum",
+        "slug": "lorem-ipsum",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempor, turpis ut venenatis ultrices, dolor felis accumsan sapien, et malesuada erat velit tincidunt turpis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris quis arcu quis augue semper ultricies vitae et risus. Proin auctor mauris eget consequat congue. Proin viverra luctus nisi. Cras in tincidunt augue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque vitae justo maximus, aliquam nisi nec, blandit dui. Pellentesque a fermentum sem. Mauris consequat urna sit amet risus euismod porttitor. Donec nec odio non diam pellentesque mollis id nec ipsum. Etiam pretium commodo lorem, at bibendum libero molestie eu. Maecenas felis risus, fermentum eu elit ac, mollis fermentum velit.\r\n\r\nMaecenas euismod est at ligula mattis dapibus. Curabitur vestibulum purus eget neque placerat, eu mattis ipsum aliquet. Donec in imperdiet risus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc rutrum tempor ex sed interdum. Phasellus ac feugiat orci, vitae egestas risus. Aliquam tristique urna id porttitor tincidunt. Nulla sagittis, orci a consectetur feugiat, ligula odio luctus magna, ut porttitor eros nibh vitae sem. Ut lobortis, quam et convallis dignissim, quam urna porta sapien, id euismod velit ligula imperdiet mauris. Cras sit amet sapien vel magna tincidunt varius. Praesent augue ante, finibus a bibendum sit amet, accumsan in ligula. Donec iaculis quam id ipsum euismod, sit amet pharetra arcu pretium. Sed vitae massa augue. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi quis tortor non ligula ultricies viverra a ac felis. Interdum et malesuada fames ac ante ipsum primis in faucibus.\r\n\r\nNullam malesuada, lectus sed scelerisque suscipit, mi neque tincidunt nisl, quis ultricies mauris odio nec lorem. In nec massa rutrum, eleifend ligula vitae, convallis nibh. Suspendisse in tempus mi, tempor pulvinar risus. Donec molestie ipsum nec ante tristique, quis viverra nibh scelerisque. Ut id bibendum nibh. Nullam auctor consequat nisi, eu viverra lacus. Quisque mauris purus, varius et mauris non, hendrerit commodo velit. Praesent cursus eu urna eu vehicula. Integer in luctus orci, mollis fermentum quam. Integer gravida tincidunt nunc, in scelerisque arcu aliquet ac.\r\n\r\nSuspendisse non mi ac odio vulputate efficitur. Cras id nibh aliquet, finibus elit eu, congue urna. Donec volutpat, sem quis tincidunt lobortis, tortor orci condimentum urna, aliquam maximus nisl enim ac mauris. Aliquam ornare sem laoreet, aliquam augue sit amet, molestie risus. Maecenas sodales justo vel velit fringilla, eget pretium mi auctor. Nunc non nunc mollis ligula pharetra hendrerit vitae in elit. Nam est dui, interdum sit amet eros in, interdum vulputate purus. Proin porttitor ornare accumsan.\r\n\r\nNunc dolor metus, fermentum tempus tincidunt in, congue commodo lectus. Aenean quis mollis augue. Nulla viverra ligula nec sagittis ullamcorper. Sed fermentum ipsum a massa commodo, non egestas massa semper. Morbi rutrum diam non velit ullamcorper aliquet. Pellentesque sollicitudin mattis diam ac porta. Suspendisse velit risus, ultricies tristique imperdiet vitae, pharetra sit amet arcu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean facilisis commodo dictum. Donec efficitur, dui a molestie pulvinar, urna purus imperdiet lectus, eget cursus nisi velit vitae odio. Vivamus ac tempus lacus. Phasellus quis lacinia sapien, eget congue nunc.",
+        "price": "39.99",
+        "image": "products/34958684342/34958684342.PNG",
+        "featured": false,
+        "active": true,
+        "timestamp": "2018-08-24T14:31:23.779Z"
+    }
+}
+]
