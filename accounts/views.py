@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.generic import CreateView, FormView
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, get_user_model
 from django.utils.http import is_safe_url
@@ -57,20 +58,18 @@ def login_page(request):
     return render(request, "accounts/login.html", context)
 
 
-User = get_user_model()
+class RegisterView(CreateView):
+    form_class = RegisterForm
+    template_name = 'accounts/register.html'
+    success_url = '/login/'
 
-
-def register_page(request):
-    form = RegisterForm(request.POST or None)
-    context = {
-        "form": form
-    }
-    if form.is_valid():
-        print(form.cleaned_data)
-        username = form.cleaned_data.get('username')
-        email = form.cleaned_data.get('email')
-        password = form.cleaned_data.get('password')
-        new_user = User.objects.create_user(username=username, email=email, password=password)
-        print(new_user)
-    return render(request, "accounts/register.html", context)
-
+# User = get_user_model()
+# def register_page(request):
+#     form = RegisterForm(request.POST or None)
+#     context = {
+#         "form": form
+#     }
+#     if form.is_valid():
+#         form.save()
+#
+#     return render(request, "accounts/register.html", context)
