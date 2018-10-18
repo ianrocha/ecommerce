@@ -12,18 +12,18 @@ class CartManager(models.Manager):
         cart_id = request.session.get('cart_id', None)
         qs = self.get_queryset().filter(id=cart_id)
         if qs.count() == 1:
-            print('Cart ID exists')
+            # print('Cart ID exists')
             new_obj = False
             cart_obj = qs.first()
             if request.user.is_authenticated and cart_obj.user is None:
                 cart_obj.user = request.user
                 cart_obj.save()
-                print("salvou!")
+                # print("salvou!")
         else:
             cart_obj = Cart.objects.new(user=request.user)
             new_obj = True
             request.session['cart_id'] = cart_obj.id
-            print("Criou!")
+            # print("Criou!")
         return cart_obj, new_obj
 
     def new(self, user=None):
