@@ -10,7 +10,6 @@
       <!--<link rel='stylesheet' href='{% static "css/css.html" %}' >-->
       <!--<link rel="script" href="{% static 'js/js.html' %}">-->
       {% include 'base/css.html' %}
-
     </head>
     <body>
 
@@ -21,5 +20,8 @@
         </div>
 
         {% include 'base/js.html' %}
+        {% block javascript %}
+        {% endblock %}
+
     </body>
 </html>
