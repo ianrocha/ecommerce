@@ -33,7 +33,7 @@
   else if (paymentForm.length == 1 ){
 
     var pubKey = paymentForm.attr('data-token');
-    var nextUrl = paymentForm.attr('next-url');
+    var nextUrl = paymentForm.attr('data-next-url');
 
     // Create a Stripe client.
     var stripe = Stripe(pubKey);
@@ -93,6 +93,15 @@
       });
     });
 
+    function redirectToNext(nextPath, timeoffset){
+      if (nextPath){
+        setTimeout(function(){
+          window.location.href = nextPath
+        }, timeoffset)
+      }
+    }
+
+
     function stripeTokenHandler(nextUrl, token){
       // console.log(token.id)
       var paymentMethodEndpoint = '/billing/payment-method/create/'
@@ -106,11 +115,17 @@
         method: 'POST',
         success: function(data){
           console.log(data)
-          if (nextUrl) {
-            window.location.href = nextUrl
-          } else {
-            window.location.reload()
+          var successMsg = data.message || "Success! Your card was added."
+          card.clear()
+          if (nextUrl){
+            successMsg = successMsg + "</br></br><i class='fa fa-spin fa-spinner'></i> Redirecting..."
           }
+          if ($.alert) {
+            $.alert(successMsg)
+          } else {
+            alert(successMsg)
+          }
+          redirectToNext(nextUrl, 1500)
         },
         error: function(error){
           console.log(error)
