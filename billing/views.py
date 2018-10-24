@@ -4,7 +4,7 @@ from django.utils.http import is_safe_url
 
 import stripe
 
-from .models import BillingProfile
+from .models import BillingProfile, Card
 
 stripe.api_key = 'sk_test_WNgx9dyqpq0F7ybQ7LAVOqzZ'
 STRIPE_PUB_KEY = 'pk_test_vX0k7ckAxcB3vBAqygOXGKLt'
@@ -20,7 +20,6 @@ def payment_method_view(request):
 
     next_url = None
     next_ = request.GET.get('next')
-    print(next_)
     if is_safe_url(next_, request.get_host()):
             next_url = next_
     return render(request, 'billing/payment-method.html', {'publish_key': STRIPE_PUB_KEY, 'next_url': next_url})
@@ -36,8 +35,8 @@ def payment_method_create_view(request):
         if token is not None:
             customer = stripe.Customer.retrieve(billing_profile.customer_id)
             card_response = customer.sources.create(source=token)
-
-            print(card_response)  # start saving our cards too
+            new_card_obj = Card.objects.add_new(billing_profile=billing_profile, stripe_card_response=card_response)
+            print(new_card_obj)  # start saving our cards too
             return JsonResponse({'message': 'Success! Your card was added.'})
 
     return HttpResponse('error', status=401)
