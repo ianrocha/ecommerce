@@ -42,9 +42,7 @@ class BillingProfile(models.Model):
 
 def billing_profile_created_receiver(sender, instance, *args, **kwargs):
     if not instance.customer_id and instance.email:
-        print("Send to strip/braintree")
         customer = stripe.Customer.create(email=instance.email)
-        instance.save()
         instance.customer_id = customer.id
 
 
@@ -57,3 +55,9 @@ def user_created_receiver(sender, instance, created, *args, **kwargs):
 
 
 post_save.connect(user_created_receiver, sender=User)
+
+
+# class Card(models.Model):
+#     pass
+
+
