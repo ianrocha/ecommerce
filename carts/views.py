@@ -50,7 +50,6 @@ def cart_update(request):
         # cart_obj.products.remove(obj) - remove from m2m
 
         if request.is_ajax():
-            print("Ajax Request")
             json_data = {
                 "added": added,
                 "removed": not added,
@@ -95,12 +94,17 @@ def checkout_home(request):
             order_obj.save()
 
     if request.method == 'POST':
-        is_done = order_obj.check_done()
-        if is_done:
-            order_obj.mark_paid()
-            request.session['cart_items'] = 0
-            del request.session['cart_id']
-            return redirect('cart:success')
+        is_prepared = order_obj.check_done()
+        if is_prepared:
+            did_charge, crg_msg = billing_profile.charge(order_obj)
+            if did_charge:
+                order_obj.mark_paid()
+                request.session['cart_items'] = 0
+                del request.session['cart_id']
+                return redirect('cart:success')
+            else:
+                print(crg_msg)
+                return redirect('cart:checkout')
 
     context = {
         'object': order_obj,

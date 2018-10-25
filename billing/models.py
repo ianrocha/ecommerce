@@ -39,6 +39,9 @@ class BillingProfile(models.Model):
 
     objects = BillingProfileManager()
 
+    def charge(self, order_obj, card=None):
+        return Charge.objects.do(self, order_obj, card)
+
 
 def billing_profile_created_receiver(sender, instance, *args, **kwargs):
     if not instance.customer_id and instance.email:
@@ -58,8 +61,10 @@ post_save.connect(user_created_receiver, sender=User)
 
 
 class CardManager(models.Manager):
-    def add_new(self, billing_profile, stripe_card_response):
-        if str(stripe_card_response.object) == 'card':
+    def add_new(self, billing_profile, token):
+        if token:
+            customer = stripe.Customer.retrieve(billing_profile.customer_id)
+            stripe_card_response = customer.sources.create(source=token)
             new_card = self.model(billing_profile=billing_profile,
                                   stripe_id=stripe_card_response.id,
                                   brand=stripe_card_response.brand,
@@ -95,12 +100,12 @@ class ChargeManager(models.Manager):
             cards = billing_profile.card_set.filter(default=True)
             if cards.exists():
                 card_obj = cards.first()
-        if card is None:
+        if card_obj is None:
             return False, "No cards available"
 
         c = stripe.Charge.create(amount=int(order_obj.total * 100),
                                  currency="usd",
-                                 customer=billing_profile.stripe_id,
+                                 customer=billing_profile.customer_id,
                                  source=card_obj.stripe_id,
                                  metadata={'order_id': order_obj.order_id})
 
