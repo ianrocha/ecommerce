@@ -42,6 +42,22 @@ class BillingProfile(models.Model):
     def charge(self, order_obj, card=None):
         return Charge.objects.do(self, order_obj, card)
 
+    def get_cards(self):
+        return self.card_qs.exists()
+
+    @property
+    def has_card(self):
+        instance = self
+        card_qs = instance.card_set.all()
+        return card_qs.exists()
+
+    @property
+    def default_card(self):
+        default_cards = self.get_cards().filter(default=True)
+        if default_cards.exists():
+            return default_cards.first()
+        return None
+
 
 def billing_profile_created_receiver(sender, instance, *args, **kwargs):
     if not instance.customer_id and instance.email:

@@ -50,7 +50,10 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'accounts.User'  # Changes the built-in user model to ours
 
 FORCE_SESSION_TO_ONE = False
-FORCE_INACTIVE_USER_ENDSESSION= False
+FORCE_INACTIVE_USER_ENDSESSION = False
+
+STRIPE_SECRET_KEY = 'sk_test_WNgx9dyqpq0F7ybQ7LAVOqzZ'
+STRIPE_PUB_KEY = 'pk_test_vX0k7ckAxcB3vBAqygOXGKLt'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
