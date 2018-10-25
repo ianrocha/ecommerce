@@ -17,6 +17,7 @@ STRIPE_SECRET_KEY = getattr(settings, 'STRIPE_SECRET_KEY', 'sk_test_WNgx9dyqpq0F
 STRIPE_PUB_KEY = getattr(settings, 'STRIPE_PUB_KEY', 'pk_test_vX0k7ckAxcB3vBAqygOXGKLt')
 stripe.api_key = STRIPE_SECRET_KEY
 
+
 def cart_detail_api_view(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
     products = [{"id": x.id,
