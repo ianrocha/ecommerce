@@ -1,27 +1,37 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-      <!-- Required meta tags -->
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-      <title>Base Template</title>
-      <!--<link rel='stylesheet' href='{% static "css/css.html" %}' >-->
-      <!--<link rel="script" href="{% static 'js/js.html' %}">-->
-      {% include 'base/css.html' %}
-    </head>
-    <body>
+    <title>Base Template</title>
+    <!--<link rel='stylesheet' href='{% static "css/css.html" %}' >-->
+    <!--<link rel="script" href="{% static 'js/js.html' %}">-->
+    {% include 'base/css.html' %}
+  </head>
+  <body>
 
-        {% include 'navbar.html' with brand_name='eCommerce' %}
-        <div class="container">
-            {% block content %}
-            {% endblock %}
+    {% include 'navbar.html' with brand_name='eCommerce' %}
+    <div class="container">
+      {% if messages %}
+        <div class="alert alert-success messages">
+          {% for message in messages %}
+            <span {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+              {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+              {{ message }} <br/>
+            </span>
+          {% endfor %}
         </div>
+      {% endif %}
+      {% block content %}
+      {% endblock %}
+    </div>
 
-        {% include 'base/js.html' %}
-        {% block javascript %}
-        {% endblock %}
+    {% include 'base/js.html' %}
+    {% block javascript %}
+    {% endblock %}
 
-    </body>
+  </body>
 </html>
