@@ -16,7 +16,8 @@ def check_email(email):
     return email
 
 
-def get_subscriber_has(member_email):
+def get_subscriber_hash(member_email):
+    check_email(member_email)
     member_email = member_email.lower().encode()
     m = hashlib.md5(member_email)
     return m.hexdigest()
@@ -34,17 +35,17 @@ class Mailchimp(object):
         return self.list_endpoint + '/members'
 
     def change_subscription_status(self, email, status='unsubscribed'):
-        hashed_email = get_subscriber_has(email)
+        hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + '/' + hashed_email
         data = {
+            'email_address': email,
             'status': self.check_valid_status(status)
         }
         r = requests.put(endpoint, auth=('', self.key), data=json.dumps(data))
         return r.status_code, r.json()
 
     def check_subscription_status(self, email):
-        hashed_email = get_subscriber_has(email)
-        print(hashed_email)
+        hashed_email = get_subscriber_hash(email)
         endpoint = self.get_members_endpoint() + '/' + hashed_email
         r = requests.get(endpoint, auth=('', self.key))
         return r.status_code, r.json()
@@ -71,7 +72,7 @@ class Mailchimp(object):
         return self.change_subscription_status(email, status='unsubscribed')
 
     def subscribe(self, email):
-        return self.change_subscription_status(email, status='subscribed')
+        return self.change_subscription_status(email=email, status='subscribed')
 
     def pending(self, email):
         return self.change_subscription_status(email, status='pending')
