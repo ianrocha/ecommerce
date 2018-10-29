@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from . import keys
+from ecommerce import keys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
@@ -23,9 +24,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = '*jwh2*@bk(=#nyz+a!xw_lnc@st8oz+sr=t$erppzl&nkz4n08'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
