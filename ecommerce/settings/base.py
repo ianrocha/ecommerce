@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-from ecommerce import keys
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -55,7 +55,7 @@ AUTH_USER_MODEL = 'accounts.User'  # Changes the built-in user model to ours
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
-MAILCHIMP_API_KEY = keys.MAILCHIMP_API_KEY
+MAILCHIMP_API_KEY = ''
 MAILCHIMP_DATA_CENTER = 'us19'
 MAILCHIMP_EMAIL_LIST_ID = '091c6a5ddf'
 
