@@ -14,6 +14,7 @@ User = settings.AUTH_USER_MODEL
 FORCE_SESSION_TO_ONE = getattr(settings, 'FORCE_SESSION_TO_ONE', False)
 FORCE_INACTIVE_USER_ENDSESSION= getattr(settings, 'FORCE_INACTIVE_USER_ENDSESSION', False)
 
+
 class ObjectViewed(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)  # User instance
     ip_address = models.CharField(max_length=220, blank=True, null=True)
@@ -33,8 +34,8 @@ class ObjectViewed(models.Model):
 
 def object_viewed_receiver(sender, instance, request, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)  # instance.__class__
-    # user = request.user if request.user else None
-    new_view_obj = ObjectViewed.objects.create(user=request.user,
+    user = request.user if request.user.is_authenticated else None
+    new_view_obj = ObjectViewed.objects.create(user=user,
                                                content_type=c_type,
                                                object_id=instance.id,
                                                ip_address=get_client_ip(request))
