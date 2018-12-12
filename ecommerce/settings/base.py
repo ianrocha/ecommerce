@@ -29,6 +29,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'youremail@gmail.com'
+EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Python ecommerce <ianbritosr@gmail.com>'
+
+MANAGERS = (("ianbritosr@gmail.com", 'Ian Rocha'),)
+
+ADMINS = MANAGERS
+
 # Application definition
 
 INSTALLED_APPS = [
