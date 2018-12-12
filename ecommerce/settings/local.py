@@ -34,9 +34,9 @@ EMAIL_HOST_USER = 'youremail@gmail.com'
 EMAIL_HOST_PASSWORD = 'yourpassword'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python ecommerce <ianbritosr@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Python ecommerce <ianbsrocha@gmail.com>'
 
-MANAGERS = (("ianbritosr@gmail.com", 'Ian Rocha'),)
+MANAGERS = (("ianbsrocha@gmail.com", 'Ian Rocha'),)
 
 ADMINS = MANAGERS
 
