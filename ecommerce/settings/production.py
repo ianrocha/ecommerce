@@ -21,7 +21,8 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*jwh2*@bk(=#nyz+a!xw_lnc@st8oz+sr=t$erppzl&nkz4n08'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -57,12 +58,12 @@ AUTH_USER_MODEL = 'accounts.User'  # Changes the built-in user model to ours
 FORCE_SESSION_TO_ONE = False
 FORCE_INACTIVE_USER_ENDSESSION = False
 
-MAILCHIMP_API_KEY = '9919236590c2c6543fe4a54a110d3d35-us19'
+MAILCHIMP_API_KEY = os.environ.get('MAILCHIMP_API_KEY')
 MAILCHIMP_DATA_CENTER = 'us19'
-MAILCHIMP_EMAIL_LIST_ID = '091c6a5ddf'
+MAILCHIMP_EMAIL_LIST_ID = os.environ.get('MAILCHIMP_EMAIL_LIST_ID')
 
-STRIPE_SECRET_KEY = 'sk_test_WNgx9dyqpq0F7ybQ7LAVOqzZ'
-STRIPE_PUB_KEY = 'pk_test_vX0k7ckAxcB3vBAqygOXGKLt'
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY', 'sk_test_WNgx9dyqpq0F7ybQ7LAVOqzZ')
+STRIPE_PUB_KEY = os.environ.get('STRIPE_PUB_KEY', 'pk_test_vX0k7ckAxcB3vBAqygOXGKLt')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -7,7 +7,8 @@ from accounts.models import GuestEmail
 import stripe
 
 
-stripe.api_key = 'sk_test_WNgx9dyqpq0F7ybQ7LAVOqzZ'
+STRIPE_SECRET_KEY = getattr(settings, 'STRIPE_SECRET_KEY', 'sk_test_WNgx9dyqpq0F7ybQ7LAVOqzZ')
+stripe.api_key = STRIPE_SECRET_KEY
 
 
 User = settings.AUTH_USER_MODEL

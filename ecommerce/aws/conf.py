@@ -1,12 +1,15 @@
 import datetime
+import os
+
 
 AWS_GROUP = 'eCommerce_Rocha_Group'
 AWS_USERNAME = 'ian-ecommerce-user'
-AWS_SECRET_ACCESS_KEY = 'NXXg+gTNgCNJ1o4P2UTqeu1AaQYl8Foh+lgfpIZp'
-AWS_ACCESS_KEY_ID = 'AKIAJXKZD7QR3YP4VFYA'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'AKIAJXKZD7QR3YP4VFYA')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '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')
+
 AWS_FILE_EXPIRE = 200
 AWS_PRELOAD_METADATA = True
-# AWS_QUERYSTRING_AUTH = True
+AWS_QUERYSTRING_AUTH = False
 
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
@@ -26,5 +29,3 @@ AWS_HEADERS = {
     'Expires': expires,
     'Cache-Control': 'max-age=%d' % (int(two_months.total_seconds()), ),
 }
-
-AWS_QUERYSTRING_AUTH = True
