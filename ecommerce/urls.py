@@ -35,6 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # path('about/', views.about_page, name='about'),
     # path('contact/', views.contact_page, name='contact'),
+    path('accounts/', include(('accounts.urls', 'account'), namespace='account')),
     path('login/', LoginView.as_view(), name='login'),
     path('checkout/address/create/', checkout_address_create_view, name='checkout_address_create'),
     path('checkout/address/reuse/', checkout_address_reuse_view, name='checkout_address_reuse'),
