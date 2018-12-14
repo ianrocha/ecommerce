@@ -33,7 +33,7 @@ EMAIL_HOST_USER = 'ianbsrocha@gmail.com'
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Python ecommerce <ianbsrocha@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Ecommerce Rocha <ianbsrocha@gmail.com>'
 
 MANAGERS = (('Ian Rocha', "ianbsrocha@gmail.com"),)
 
