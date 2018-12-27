@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.shortcuts import redirect
-from django.views.generic import CreateView, FormView, DetailView
+from django.shortcuts import redirect, render
+from django.urls import reverse
+from django.views.generic import CreateView, FormView, DetailView, View
 from django.utils.http import is_safe_url
+from django.utils.safestring import mark_safe
 
-from .models import GuestEmail
+from .models import GuestEmail, EmailActivation
 from .forms import RegisterForm, LoginForm, GuestForm
 from .signals import user_logged_in
 
@@ -15,6 +17,30 @@ class AccountHomeView(LoginRequiredMixin, DetailView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class AccountEmailActivationView(View):
+    def get(self, request, key, *args, **kwargs):
+        qs = EmailActivation.objects.filter(key__iexact=key)
+        confirm_qs = qs.confirmable()
+        if confirm_qs.count() == 1:
+            obj = qs.first()
+            obj.activate()
+            messages.success(request, "Your email has been confirmed. Please login.")
+            return redirect('login')
+        else:
+            activated_qs = qs.filter(activated=True)
+            if activated_qs.exists():
+                reset_link = reverse('password_reset')
+                msg = """Your email has already been confirmed.
+                Do you need to <a href="{link}">reset your password?</a>""".format(link=reset_link)
+                messages.success(request, mark_safe(msg))
+                return redirect('login')
+        return render(request, 'registration/activation-error.html', {})
+
+    def post(self, request, *args, **kwargs):
+        #  create form to receive an email
+        pass
 
 
 def guest_register_view(request):

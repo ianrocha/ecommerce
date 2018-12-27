@@ -5,6 +5,7 @@ from django.db.models.signals import pre_save, post_save
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils import timezone
 from ecommerce.utils import random_string_generator, unique_key_generator
 
@@ -139,7 +140,7 @@ class EmailActivation(models.Model):
         if not self.activated and not self.forced_expired:
             if self.key:
                 base_url = getattr(settings, 'BASE_URL', 'https://ecommerce-rocha.herokuapp.com/')
-                key_path = self.key
+                key_path = reverse("account:email-activate", kwargs={'key': self.key})
                 path = '{base}{path}'.format(base=base_url, path=key_path)
                 context = {
                     'path': path,
