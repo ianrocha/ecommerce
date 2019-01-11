@@ -31,6 +31,7 @@ from addresses.views import (AddressCreateView,
 from billing.views import payment_method_view, payment_method_create_view
 from carts.views import cart_detail_api_view
 from marketing.views import MarketingPreferenceUpdateView, MailchimpWebHookView
+from orders.views import LibraryView
 from . import views
 
 
@@ -56,6 +57,7 @@ urlpatterns = [
     path('billing/payment-method/', payment_method_view, name='billing-payment-method'),
     path('billing/payment-method/create/', payment_method_create_view, name='billing-payment-method-endpoint'),
     path('register/', RegisterView.as_view(), name='register'),
+    path('library/', LibraryView.as_view(), name='library'),
     path('orders/', include(('orders.urls', 'orders'), namespace='orders')),
     path('products/', include(('products.urls', 'products'), namespace='products')),
     path('search/', include(('search.urls', 'search'), namespace='search')),
