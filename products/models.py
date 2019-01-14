@@ -1,6 +1,8 @@
 import os
 import random
 
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 from django.db.models import Q
 from django.db import models
 from django.db.models.signals import pre_save, post_save
@@ -91,7 +93,6 @@ pre_save.connect(product_pre_save_receiver, sender=Product)
 
 
 def upload_product_file_loc(instance, filename):
-    print(instance.id)
     slug = instance.product.slug
     if not slug:
         slug = unique_slug_generator(instance.product)
@@ -101,7 +102,8 @@ def upload_product_file_loc(instance, filename):
 
 class ProductFile(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=upload_product_file_loc)
+    file = models.FileField(upload_to=upload_product_file_loc,
+                            storage=FileSystemStorage(location=settings.PROTECTED_ROOT))
 
     def __str__(self):
         return str(self.file.name)
