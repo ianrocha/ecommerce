@@ -1,3 +1,4 @@
+import os
 import random
 import string
 from django.utils.text import slugify
@@ -51,3 +52,7 @@ def unique_slug_generator(instance, new_slug=None):
         new_slug = "{slug}-{randstr}".format(slug=slug, randstr=random_string_generator(size=4))
         return unique_slug_generator(instance, new_slug=new_slug)
     return slug
+
+
+def get_filename(path):
+    return os.path.basename(path)

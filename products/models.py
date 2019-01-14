@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models.signals import pre_save, post_save
 from django.urls import reverse
 
-from ecommerce.utils import unique_slug_generator
+from ecommerce.utils import unique_slug_generator, get_filename
 
 
 def get_filename_ext(filepath):
@@ -83,6 +83,10 @@ class Product(models.Model):
     def name(self):
         return self.title
 
+    def get_downloads(self):
+        qs = self.productfile_set.all()
+        return qs
+
 
 def product_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
@@ -107,3 +111,10 @@ class ProductFile(models.Model):
 
     def __str__(self):
         return str(self.file.name)
+
+    def get_download_url(self):
+        return self.file.url
+
+    @property
+    def name(self):
+        return get_filename(self.file.name)

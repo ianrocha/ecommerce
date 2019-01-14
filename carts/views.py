@@ -32,7 +32,7 @@ def cart_detail_api_view(request):
 
 def cart_home(request):
     cart_obj, new_obj = Cart.objects.new_or_get(request)
-    print(cart_obj.is_digital_only)
+    # print(cart_obj.is_digital_only)
     return render(request, "carts/home.html", {'cart': cart_obj})
 
 
@@ -42,7 +42,7 @@ def cart_update(request):
         try:
             product_obj = Product.objects.get(id=product_id)  # grab the object
         except Product.DoesNotExist:
-            print("Show message to user, product is gone?")
+            # print("Show message to user, product is gone?")
             return redirect("cart:home")
 
         cart_obj, new_obj = Cart.objects.new_or_get(request) # grab the cart or create one
