@@ -1,11 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 
 from analytics.mixins import ObjectViewedMixin
 from carts.models import Cart
-from .models import Product
+from .models import Product, ProductFile
 
 
 class ProductFeaturedListView(ListView):
@@ -51,14 +51,6 @@ class ProductListView(ListView):
         return Product.objects.all()
 
 
-def product_list_view(request):
-    queryset = Product.objects.all()
-    context = {
-        'object_list': queryset
-    }
-    return render(request, 'products/list.html', context)
-
-
 class ProductDetailSlugView(ObjectViewedMixin, DetailView):
     queryset = Product.objects.all()
     template_name = 'products/detail.html'
@@ -87,6 +79,20 @@ class ProductDetailSlugView(ObjectViewedMixin, DetailView):
         return instance
 
 
+class ProductDownloadView(View):
+    def get(self, *args, **kwargs):
+        slug = kwargs.get('slug')
+        pk = kwargs.get('pk')
+        downloads_qs = ProductFile.objects.filter(pk=pk, product__slug=slug)
+        if downloads_qs.count() != 1:
+            raise Http404("Download not found")
+        download_obj = downloads_qs.first()
+        # permission checks
+        # form the download
+        response = HttpResponse(download_obj.get_download_url())
+        return response
+
+
 class ProductDetailView(ObjectViewedMixin, DetailView):
     # queryset = Product.objects.all()
     template_name = 'products/detail.html'
@@ -104,32 +110,3 @@ class ProductDetailView(ObjectViewedMixin, DetailView):
     # def get_queryset(self, *args, **kwargs):
     #     pk = self.kwargs.get('pk')
     #     return Product.objects.filter(pk=pk)
-
-
-def product_detail_view(request, pk=None, *args, **kwargs):
-    # instance = get_object_or_404(Product, pk=pk)
-
-    # try:
-    #     instance = Product.objects.get(id=pk)
-    # except Product.DoesNotExist:
-    #     print('no product here')
-    #     raise Http404("Product doesn't exist")
-    # except:
-    #     print('huh?')
-
-    instance = Product.objects.get_by_id(pk)
-    if instance is None:
-        raise Http404("Product doesn't exist")
-    # print(instance)
-
-    # qs = Product.objects.filter(id=pk)
-    # if qs.count() == 1:
-    #     instance = qs.first()
-    # else:
-    #     raise Http404("Product doesn't exist")
-
-    context = {
-        'object': instance
-    }
-
-    return render(request, 'products/detail.html', context)
