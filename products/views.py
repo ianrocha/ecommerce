@@ -1,7 +1,11 @@
+import os
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, View
+from mimetypes import guess_type
+from wsgiref.util import FileWrapper
 
 from analytics.mixins import ObjectViewedMixin
 from carts.models import Cart
@@ -88,9 +92,20 @@ class ProductDownloadView(View):
             raise Http404("Download not found")
         download_obj = downloads_qs.first()
         # permission checks
-        # form the download
-        response = HttpResponse(download_obj.get_download_url())
-        return response
+        file_root = settings.PROTECTED_ROOT
+        filepath = download_obj.file.path
+        final_filepath = os.path.join(file_root, filepath)
+        with open(final_filepath, 'rb') as f:
+            wrapper = FileWrapper(f)
+            mimetype = 'application/force-download'
+            guessed_mimetype = guess_type(filepath)[0]
+            if guessed_mimetype:
+                mimetype = guessed_mimetype
+            response = HttpResponse(wrapper, content_type=mimetype)
+            response['Content-Disposition'] = 'attachment;filename={}'.format(download_obj.name)
+            response['X-SendFile'] = str(download_obj.name)
+            return response
+        # return redirect(download_obj.get_absolut_url())
 
 
 class ProductDetailView(ObjectViewedMixin, DetailView):
