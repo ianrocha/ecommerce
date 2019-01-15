@@ -120,6 +120,7 @@ class ProductDetailView(ObjectViewedMixin, DetailView):
         if instance is None:
             raise Http404("Product doesn't exist")
 
+
         return instance
 
     # def get_queryset(self, *args, **kwargs):
