@@ -194,8 +194,6 @@ class ProductPurchaseManager(models.Manager):
         return products_qs
 
 
-
-
 class ProductPurchase(models.Model):
     order_id = models.CharField(max_length=120)
     billing_profile = models.ForeignKey(BillingProfile, on_delete=models.CASCADE)
