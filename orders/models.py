@@ -187,6 +187,11 @@ class ProductPurchaseManager(models.Manager):
     def digital(self):
         return self.get_queryset().active().digital()
 
+    def products_by_id(self, request):
+        qs = self.by_request(request).digital()
+        ids_ = [x.product.id for x in qs]
+        return ids_
+
     def products_by_request(self, request):
         qs = self.by_request(request).digital()
         ids_ = [x.product.id for x in qs]

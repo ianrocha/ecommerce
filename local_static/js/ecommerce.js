@@ -30,6 +30,45 @@ $(document).ready(function(){
 
     var productForm = $(".form-product-ajax")
 
+    function getOwnedProduct(productId, submitSpan){
+        var actionEndpoint = '/orders/endpoint/verify/ownership/'
+        var httpMethod = 'GET'
+        var data = {
+            product_id: productId
+        }
+        var isOwner;
+        console.log(data)
+        $.ajax({
+            url: actionEndpoint,
+            method: httpMethod,
+            data: data,
+            success: function(data){
+                if (data.owner){
+                    isOwner = true
+                    submitSpan.html("<a class='btn btn-warning' href='/library/'>In library</a>")
+                } else {
+                    isOwner = false
+                }
+            },
+            error: function(error){
+                console.log(error)
+            }
+        })
+    }
+
+    $.each(productForm, function(index,object){
+        var $this = $(this)
+        var submitSpan = $this.find('.submit-span')
+        var productInput = $this.find("[name='product_id']")
+        var productId = productInput.attr('value')
+        var productIsDigital = productInput.attr('data-is-digital')
+        var isUser = $this.attr('data-user')
+
+        if (productIsDigital && isUser){
+            var isOwned = getOwnedProduct(productId, submitSpan);
+        }
+    })
+
     productForm.submit(function(event){
         event.preventDefault();
         var thisForm = $(this)
@@ -44,7 +83,7 @@ $(document).ready(function(){
             success: function(data){
                 var submitSpan = thisForm.find(".submit-span")
                 if (data.added) {
-                submitSpan.html("In Cart <button type='submit' class='btn btn-link'>Remove?</button>")
+                submitSpan.html("<div class='btn-group'><a class='btn btn-link' href='/cart/'>In Cart</a> <button type='submit' class='btn btn-link'>Remove?</button></div>")
                 } else {
                 submitSpan.html("<button type='submit' class='btn btn-success'>Add to Cart</button>")
                 }
