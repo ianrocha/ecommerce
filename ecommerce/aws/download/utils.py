@@ -58,7 +58,7 @@ class AWSDownload(object):
             if download:
                 filename = self.get_filename(path, new_filename=new_filename)
                 headers = {'response-content-type': 'application/force-download',
-                           'response-content-disposition':'attachment;filename="%s"' % filename}
+                           'response-content-disposition': 'attachment;filename="%s"' % filename}
             file_url = aws_obj_key .generate_url(response_headers=headers,
                                                  expires_in=self.expires,
                                                  method='GET')

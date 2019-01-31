@@ -2,7 +2,7 @@ import os
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, View
 from mimetypes import guess_type
@@ -113,19 +113,21 @@ class ProductDownloadView(View):
             messages.error(request, "You do not have access to download this item.")
             return redirect(download_obj.get_default_url())
 
-        file_root = settings.PROTECTED_ROOT
-        filepath = download_obj.file.path
-        final_filepath = os.path.join(file_root, filepath)
-        with open(final_filepath, 'rb') as f:
-            wrapper = FileWrapper(f)
-            mimetype = 'application/force-download'
-            guessed_mimetype = guess_type(filepath)[0]
-            if guessed_mimetype:
-                mimetype = guessed_mimetype
-            response = HttpResponse(wrapper, content_type=mimetype)
-            response['Content-Disposition'] = 'attachment;filename={}'.format(download_obj.name)
-            response['X-SendFile'] = str(download_obj.name)
-            return response
+        aws_file_path = download_obj.generate_download_url()
+        return HttpResponseRedirect(aws_file_path)
+        # file_root = settings.PROTECTED_ROOT
+        # filepath = download_obj.file.path
+        # final_filepath = os.path.join(file_root, filepath)
+        # with open(final_filepath, 'rb') as f:
+        #     wrapper = FileWrapper(f)
+        #     mimetype = 'application/force-download'
+        #     guessed_mimetype = guess_type(filepath)[0]
+        #     if guessed_mimetype:
+        #         mimetype = guessed_mimetype
+        #     response = HttpResponse(wrapper, content_type=mimetype)
+        #     response['Content-Disposition'] = 'attachment;filename={}'.format(download_obj.name)
+        #     response['X-SendFile'] = str(download_obj.name)
+        #     return response
         # return redirect(download_obj.get_absolut_url())
 
 

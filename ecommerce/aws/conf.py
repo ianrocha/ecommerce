@@ -14,7 +14,7 @@ AWS_QUERYSTRING_AUTH = False
 DEFAULT_FILE_STORAGE = 'ecommerce.aws.utils.MediaRootS3BotoStorage'
 STATICFILES_STORAGE = 'ecommerce.aws.utils.StaticRootS3BotoStorage'
 AWS_STORAGE_BUCKET_NAME = 'ecommerce-rocha'
-S3DIRECT_REGION = 'us-east-2'
+S3DIRECT_REGION = 'sa-east-1'
 S3_URL = '//%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_URL = '//%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
 MEDIA_ROOT = MEDIA_URL
@@ -34,4 +34,4 @@ AWS_HEADERS = {
 PROTECTED_DIR_NAME = 'protected'
 PROTECTED_MEDIA_URL = '//%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, PROTECTED_DIR_NAME)
 
-AWS_DOWNLOAD_EXPIRE = 5000  # (0ptional, in milliseconds)
+AWS_DOWNLOAD_EXPIRE = 5000  # (Optional, in milliseconds)
