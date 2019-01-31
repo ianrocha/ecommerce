@@ -116,13 +116,21 @@ def upload_product_file_loc(instance, filename):
 
 class ProductFile(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    name = models.CharField(max_length=120, null=True, blank=True)
     file = models.FileField(upload_to=upload_product_file_loc,
-                            storage=ProtectedRootS3BotoStorage())  # FileSystemStorage(location=settings.PROTECTED_ROOT))
+                            storage=ProtectedRootS3BotoStorage())  #FileSystemStorage(location=settings.PROTECTED_ROOT))
     free = models.BooleanField(default=False)  # purchase required
     user_required = models.BooleanField(default=False)  # user can be logged or not
 
     def __str__(self):
         return str(self.file.name)
+
+    @property
+    def display_name(self):
+        orig_name = get_filename(self.file.name)
+        if self.name:
+            return self.name
+        return orig_name
 
     def get_default_url(self):
         return self.product.get_absolute_url()
@@ -137,12 +145,8 @@ class ProductFile(models.Model):
         protected_dir_name = getattr(settings, 'PROTECTED_DIR_NAME', 'protected')
         path = '{base}/{file_path}'.format(base=protected_dir_name, file_path=str(self.file))
         aws_dl_object = AWSDownload(access_key, secret_key, bucket, region)
-        file_url = aws_dl_object.generate_url(path)  # ,ner_filename='New awesome file'
+        file_url = aws_dl_object.generate_url(path, new_filename=self.display_name)
         return file_url
 
     def get_download_url(self):
         return reverse('products:download', kwargs={'slug': self.product.slug, 'pk': self.pk})
-
-    @property
-    def name(self):
-        return get_filename(self.file.name)
