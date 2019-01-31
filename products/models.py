@@ -103,7 +103,7 @@ def upload_product_file_loc(instance, filename):
     id_ = instance.id
     if id_ is None:
         Klass = instance.__class__
-        qs = Klass.objects.all().oder_by('-pk')
+        qs = Klass.objects.all().order_by('-pk')
         if qs.exists():
             id_ = qs.first().id + 1
         else:
