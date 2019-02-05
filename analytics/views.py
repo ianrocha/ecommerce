@@ -30,16 +30,6 @@ class SalesAjaxView(View):
                 data['labels'] = ['Four Weeks Ago', 'Three Weeks Ago', 'Two Weeks Ago', 'Last Week', 'This Week']
                 data['data'] = [qs.by_weeks_range(weeks_ago=x, number_of_weeks=1).totals_data()['total__sum'] or 0
                                 for x in range(5, -1, -1)]
-                # current = 5
-                # data['data'] = []
-                # for i in range(0, 5):
-                #     new_qs = qs.by_weeks_range(weeks_ago=current, number_of_weeks=1)
-                #     sales_total = new_qs.totals_data()['total__sum']
-                #     if sales_total is None:
-                #         sales_total = 0
-                #     data['data'].append(sales_total)
-                #     current -= 1
-
         return JsonResponse(data)
 
 

@@ -1,69 +1,5 @@
 {% extends 'base.html' %}
 
-{% block javascript %}
-
-<script>
-$(document).ready(function(){
-  function renderChart(id, data, labels){
-    var ctx = $('#' + id)
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Sales',
-                data: data,
-                backgroundColor: 'rgba(0, 158, 29, 0.45)',
-                borderColor:'rgba(0, 158, 29, 1)',
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero:true
-                    }
-                }]
-            },
-            backgroundColor: 'rgba(75, 192, 192, 1)'
-        }
-    })
-  }
-
-  function getSalesData(id, type){
-    var url = '/analytics/sales/data/'
-    var method = 'GET'
-    var data = {'type': type}
-
-    $.ajax({
-      url: url,
-      method: method,
-      data: data,
-      success: function(responseData){
-        renderChart(id, responseData.data, responseData.labels)
-      },
-      error: function(error){
-        console.log(url)
-        console.log(data)
-        console.log(method)
-        $.alert("An error occurred")
-      }
-    })
-  }
-
-  var chartsToRender = $('.ecommerce-render-chart')
-  $.each(chartsToRender, function(index, html){
-    var $this = $(this)
-    var id = $this.attr('id')
-    var dataType = $this.attr('data-type')
-    if (id && dataType){
-      getSalesData(id, dataType)
-    }
-  })
-})
-</script>
-{% endblock %}
-
 {% block content %}
 <div class="row my-5">
   <div class="col-12">
@@ -77,29 +13,29 @@ $(document).ready(function(){
   <div class="col-4">
     <h1>Today's sales</h1>
     <hr/>
-    <p>Recent Total: ${{ today.recent_orders_data.total__sum }}</p>
-    <ol>
+    <p>Recent Total: ${{ today.recent_orders_data.total__sum|floatformat:"-2" }}</p>
+    <ul>
     {% for order in today.recent|slice:":5" %}
-      <li>
-        {{ order.order_id}}
-        {{ order.total}}
-        {{ order.updated}}
+      <li class="my-3">
+        Order #{{ order.order_id }}<br/>
+        ${{ order.total }}<br/>
+        {{ order.updated|timesince }} ago
       </li>
     {% endfor %}
-    </ol>
+    </ul>
 
     <h3>This week's sales</h3>
     <hr/>
-    <p>Recent Total: ${{ this_week.recent_orders_data.total__sum }}</p>
-    <ol>
+    <p>Recent Total: ${{ this_week.recent_orders_data.total__sum|floatformat:"-2" }}</p>
+    <ul>
     {% for order in this_week.recent|slice:":5" %}
-      <li>
-        {{ order.order_id}}
-        {{ order.total}}
-        {{ order.updated}}
+      <li class="my-3">
+        Order #{{ order.order_id }}<br/>
+        ${{ order.total }}<br/>
+        {{ order.updated|timesince }} ago
       </li>
     {% endfor %}
-    </ol>
+    </ul>
   </div>
   <div class="col">
     <canvas class="ecommerce-render-chart" id="thisWeekSales" data-type="week" width="400" height="400"></canvas>
@@ -113,9 +49,9 @@ $(document).ready(function(){
     <h1>Previous 4 weeks</h1>
   </div>
   <div class="col">
-    <p>Orders Total: ${{ last_four_weeks.recent_orders_data.total__sum }}</p>
-    <p>Shipped Total: ${{ last_four_weeks.shipped_data.total__sum }}</p>
-    <p>Paid Total: ${{ last_four_weeks.paid_data.total__sum }}</p>
+    <p>Orders Total: ${{ last_four_weeks.recent_orders_data.total__sum|floatformat:"-2" }}</p>
+    <p>Shipped Total: ${{ last_four_weeks.shipped_data.total__sum|floatformat:"-2" }}</p>
+    <p>Paid Total: ${{ last_four_weeks.paid_data.total__sum|floatformat:"-2" }}</p>
   </div>
   <div class="col">
     <canvas class="ecommerce-render-chart" id="fourWeekSales" data-type="4weeks" width="400" height="400"></canvas>
