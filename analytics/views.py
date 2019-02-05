@@ -1,9 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 
 from orders.models import Order
+
+
+class SalesAjaxView(View):
+    def get(self, request, *args, **kwargs):
+        data = {}
+        if request.user.is_staff:
+            data['labels'] = ['Mon', 'Tues', 'Weds', 'Thurs', 'Fri', 'Sat', 'Sun']
+            data['data'] = [10, 21, 32, 25, 30, 14, 50]
+        return JsonResponse(data)
 
 
 class SalesView(LoginRequiredMixin, TemplateView):
