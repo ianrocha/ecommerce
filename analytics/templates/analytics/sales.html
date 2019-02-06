@@ -13,7 +13,11 @@
   <div class="col-4">
     <h1>Today's sales</h1>
     <hr/>
-    <p>Recent Total: ${{ today.recent_orders_data.total__sum|floatformat:"-2" }}</p>
+    {% if today.recent_orders_data.total__sum %}
+      <p>Recent Total: ${{ today.recent_orders_data.total__sum|floatformat:"-2" }}</p>
+    {% else %}
+      <p>No sales today!</p>
+    {% endif %}
     <ul>
     {% for order in today.recent|slice:":5" %}
       <li class="my-3">
